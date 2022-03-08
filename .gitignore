@@ -1,0 +1,8 @@
+.idea
+
+# ignore pycache files
+**__pycache__**
+
+# ignore environment variables
+.env
+

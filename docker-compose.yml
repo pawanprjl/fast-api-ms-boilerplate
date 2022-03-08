@@ -1,0 +1,48 @@
+version: "3.3"
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "127.0.0.1:8000:80"
+    container_name: fast-api
+    environment:
+      DB_PROVIDER: ${DB_PROVIDER}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+    networks:
+      - fast-api
+    depends_on:
+      - mysql
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+
+  mysql:
+    image: mysql
+    container_name: fast-api-mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    expose:
+      - '3306'
+    networks:
+      - fast-api
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+
+networks:
+  fast-api:
+    driver: bridge
