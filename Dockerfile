@@ -12,6 +12,9 @@ RUN pip install -r /code/requirements.txt
 COPY /app /code/app
 COPY /main.py /code/
 
+# copy static files for swagger-ui
+COPY /static /code/static
+
 EXPOSE 80
 
 # run python api

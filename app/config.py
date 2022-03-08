@@ -4,15 +4,18 @@ from functools import lru_cache
 
 class BaseConfig:
     # fetch database environment from .env
+    # TODO: change the credentials later
     DB_PROVIDER = os.environ.get('DB_PROVIDER', 'mysql+pymysql')
-    DB_DATABASE = os.environ.get('DB_DATABASE', '<change_me>')
-    DB_USER = os.environ.get('DB_USER', '<change_me>')
-    DB_PASSWORD = os.environ.get('DB_PASSWORD', '<change_me>')
+    DB_DATABASE = os.environ.get('DB_DATABASE', 'mysql')
+    DB_USER = os.environ.get('DB_USER', 'pawan')
+    DB_PASSWORD = os.environ.get('DB_PASSWORD', 'password')
     DB_HOST = os.environ.get('DB_HOST', 'mysql')
     DB_PORT = os.environ.get('DB_PORT', '3306')
 
     SQLALCHEMY_DATABASE_URL = f"{DB_PROVIDER}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}"
     DATABASE_CONNECT_DICT: dict = {}
+
+    POST_API_HOST = os.environ.get('POST_API_HOST', 'http://localhost:8080/api')
 
 
 class DevelopmentConfig(BaseConfig):
